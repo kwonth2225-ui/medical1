@@ -9,7 +9,8 @@ function calculate() {
   const extraKm = Math.max(0, distance - 10);
   const extraFee = extraKm * 2300;
 
-  // [핵심] autoSurcharge()를 완전히 제거하고, 오직 스위치 체크 여부만 확인
+  // [수정 핵심] 자동 시간 판정 함수 제거!!
+  // 오직 스위치가 체크(ON)되어 있을 때만 할증 금액 적용
   const isChecked = $("manualSurcharge") ? $("manualSurcharge").checked : false;
   const surchargeFee = isChecked ? (19100 + extraKm * 460) : 0;
 
@@ -17,7 +18,7 @@ function calculate() {
   const waitUnits = wait <= 30 ? 0 : Math.ceil((wait - 30) / 10);
   const waitFee = waitUnits * 6000;
 
-  // 최종 총액 합산
+  // 최종 총액 합산 (기본 95,500원)
   const total = 95500 + extraFee + surchargeFee + waitFee;
 
   // 화면 출력
@@ -35,7 +36,7 @@ function calculate() {
   }
 }
 
-// 이벤트 연결
+// 이벤트 리스너 연결
 if ($("calc")) $("calc").addEventListener("click", calculate);
 
 ["distance", "wait", "manualSurcharge"].forEach(id => {
@@ -56,6 +57,6 @@ if ($("reset")) {
   });
 }
 
-// 첫 실행 시 스위치 해제 상태 고정
+// 실행 시 기본 스위치를 OFF 상태로 시작
 if ($("manualSurcharge")) $("manualSurcharge").checked = false;
 calculate();
