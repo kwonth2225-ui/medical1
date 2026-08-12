@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="특수구급차 이송요금 임시 계산기">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+
+<title>구급차 이송요금 계산기</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="title">🚑 구급차 이송요금</div>
+    <div class="sub">특수구급차 · 임시 계산용</div>
+  </header>
+
+  <section class="total-card">
+    <div class="caption">예상 이송처치료</div>
+    <div id="total">95,500<span>원</span></div>
+    <div id="surchargeLabel" class="normal">정상요금</div>
+  </section>
+
+  <section class="form-card">
+    <label>이송거리
+      <div class="unit-input"><input id="distance" type="number" inputmode="decimal" min="0" step="0.01" placeholder="예: 13.5"><b>km</b></div>
+    </label>
+
+    <label>기관 도착 후 대기시간
+      <div class="unit-input"><input id="wait" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 45"><b>분</b></div>
+    </label>
+
+    <div class="switch-row">
+      <div>
+        <b>할증 적용</b>
+        <small id="autoText">현재 날짜·시간 기준 자동 판정</small>
+      </div>
+      <label class="switch"><input id="manualSurcharge" type="checkbox"><span></span></label>
+    </div>
+    <div class="hint">수동 ON → 무조건 할증 / OFF → 평일 야간·토·일·공휴일 기준</div>
+
+    <button id="calc" class="main-btn">요금 계산</button>
+    <button id="reset" class="reset-btn">초기화</button>
+  </section>
+
+  <section class="detail-card">
+    <div><span>① 기본요금</span><b id="baseFee">95,500원</b></div>
+    <div><span>② 추가거리</span><b id="extraKm">0.00 km</b></div>
+    <div><span>② 추가요금</span><b id="extraFee">0원</b></div>
+    <div><span>③ 할증요금</span><b id="surchargeFee">0원</b></div>
+    <div><span>④ 대기요금</span><b id="waitFee">0원</b></div>
+  </section>
+
+  <section class="info">
+    <b>현재 적용 기준</b>
+    <p>기본 10km 이내 95,500원 · 초과 km당 2,300원 · 할증 기본 19,100원 + 초과 km당 460원 · 대기 30분 초과 시 10분 단위 6,000원</p>
+    <p>할증: 평일 18:00~다음날 09:00, 토·일요일·공휴일 전일.</p>
+  </section>
+</div>
+<script src="app.js"></script>
+<script>
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+</script>
+</body>
+</html>
