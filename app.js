@@ -9,7 +9,7 @@ function calculate() {
   const extraKm = Math.max(0, distance - 10);
   const extraFee = extraKm * 2300;
 
-  // 스위치 체크 여부로만 판단 (시간 자동 체크 완전 제거)
+  // [핵심] autoSurcharge()를 완전히 제거하고, 오직 스위치 체크 여부만 확인
   const isChecked = $("manualSurcharge") ? $("manualSurcharge").checked : false;
   const surchargeFee = isChecked ? (19100 + extraKm * 460) : 0;
 
@@ -56,10 +56,6 @@ if ($("reset")) {
   });
 }
 
-// 첫 진입 시 강제로 스위치 해제 상태로 세팅 후 계산
-document.addEventListener("DOMContentLoaded", () => {
-  if ($("manualSurcharge")) $("manualSurcharge").checked = false;
-  calculate();
-});
-
+// 첫 실행 시 스위치 해제 상태 고정
+if ($("manualSurcharge")) $("manualSurcharge").checked = false;
 calculate();
