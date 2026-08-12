@@ -1,4 +1,4 @@
-const CACHE_NAME = "ambulance-meter-v1";
+const CACHE_NAME = 'ambulance-v99';
 const FILES = [
   "./",
   "./index.html",
