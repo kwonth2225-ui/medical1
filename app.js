@@ -9,16 +9,16 @@ function calculate() {
   const extraKm = Math.max(0, distance - 10);
   const extraFee = extraKm * 2300;
 
-  // [수정 핵심] 자동 시간 판정 함수 제거!!
-  // 오직 스위치가 체크(ON)되어 있을 때만 할증 금액 적용
-  const isChecked = $("manualSurcharge") ? $("manualSurcharge").checked : false;
-  const surchargeFee = isChecked ? (19100 + extraKm * 460) : 0;
+  // [시간 자동 감지 로직 완전히 제거]
+  // 현재 접속 시간과 관계없이 사용자가 스위치를 켰을 때(ON)만 할증 적용
+  const isSurchargeOn = $("manualSurcharge") ? $("manualSurcharge").checked : false;
+  const surchargeFee = isSurchargeOn ? (19100 + extraKm * 460) : 0;
 
-  // 대기요금 계산 (30분 초과 시 10분당 6,000원 고정)
+  // 대기요금 계산 (30분 초과 시 10분당 6,000원)
   const waitUnits = wait <= 30 ? 0 : Math.ceil((wait - 30) / 10);
   const waitFee = waitUnits * 6000;
 
-  // 최종 총액 합산 (기본 95,500원)
+  // 최종 총액 합산 (기본 95,500원 시작)
   const total = 95500 + extraFee + surchargeFee + waitFee;
 
   // 화면 출력
@@ -31,12 +31,12 @@ function calculate() {
 
   const label = $("surchargeLabel");
   if (label) {
-    label.textContent = isChecked ? "할증 적용" : "정상요금";
-    label.className = isChecked ? "active" : "normal";
+    label.textContent = isSurchargeOn ? "할증 적용" : "정상요금";
+    label.className = isSurchargeOn ? "active" : "normal";
   }
 }
 
-// 이벤트 리스너 연결
+// 이벤트 연결
 if ($("calc")) $("calc").addEventListener("click", calculate);
 
 ["distance", "wait", "manualSurcharge"].forEach(id => {
@@ -47,7 +47,7 @@ if ($("calc")) $("calc").addEventListener("click", calculate);
   }
 });
 
-// 초기화 버튼 클릭 시 스위치 OFF 및 초기화
+// 초기화 버튼 클릭 시 스위치 OFF 및 95,500원으로 즉시 리셋
 if ($("reset")) {
   $("reset").addEventListener("click", () => {
     if ($("distance")) $("distance").value = "";
@@ -57,6 +57,10 @@ if ($("reset")) {
   });
 }
 
-// 실행 시 기본 스위치를 OFF 상태로 시작
-if ($("manualSurcharge")) $("manualSurcharge").checked = false;
+// [핵심] 페이지 접속 시 시계 판단 없이 강제로 스위치를 OFF로 시작하도록 고정
+document.addEventListener("DOMContentLoaded", () => {
+  if ($("manualSurcharge")) $("manualSurcharge").checked = false;
+  calculate();
+});
+
 calculate();
