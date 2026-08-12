@@ -36,11 +36,11 @@
     <div class="switch-row">
       <div>
         <b>할증 적용</b>
-        <small id="autoText">현재 날짜·시간 기준 자동 판정</small>
+        <small id="autoText">야간·주말·공휴일 수동 할증 토글</small>
       </div>
       <label class="switch"><input id="manualSurcharge" type="checkbox"><span></span></label>
     </div>
-    <div class="hint">수동 ON → 무조건 할증 / OFF → 평일 야간·토·일·공휴일 기준</div>
+    <div class="hint">스위치 ON → 할증요금 적용 / OFF → 정상요금 적용</div>
 
     <button id="calc" class="main-btn">요금 계산</button>
     <button id="reset" class="reset-btn">초기화</button>
@@ -57,10 +57,12 @@
   <section class="info">
     <b>현재 적용 기준</b>
     <p>기본 10km 이내 95,500원 · 초과 km당 2,300원 · 할증 기본 19,100원 + 초과 km당 460원 · 대기 30분 초과 시 10분 단위 6,000원</p>
-    <p>할증: 평일 18:00~다음날 09:00, 토·일요일·공휴일 전일.</p>
+    <p>할증 기준: 평일 18:00~다음날 09:00, 토·일요일·공휴일 전일.</p>
   </section>
 </div>
-<script src="app.js"></script>
+
+<!-- 버전 강제 갱신용 파라미터(?v=2026) 추가 -->
+<script src="app.js?v=2026"></script>
 <script>
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
 </script>
