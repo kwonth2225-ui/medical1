@@ -1,4 +1,6 @@
-const CACHE_NAME = 'ambulance-v99';
+// service-worker.js 파일 상단
+const CACHE_NAME = 'ambulance-v20260908_1';
+
 const FILES = [
   "./",
   "./index.html",
