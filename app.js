@@ -15,7 +15,7 @@ function calculate() {
 
     const totalDist = dayDist + nightDist;
 
-    // 10km 기본거리 차감 (주간 우선 차감)
+    // 10km 기본거리 차감 (주간 거리 우선 차감 후 남으면 야간 차감)
     let remainBase = 10;
     const dayExtraKm = Math.max(0, dayDist - remainBase);
     remainBase = Math.max(0, remainBase - dayDist);
@@ -23,7 +23,7 @@ function calculate() {
 
     // 요금 산정
     const dayExtraFee = dayExtraKm * 2300;
-    const nightExtraFee = nightExtraKm * 2760; // 2,300원 + 거리할증 460원
+    const nightExtraFee = nightExtraKm * 2760; // 기본 2,300원 + 거리할증 460원
 
     const isBaseSurchargeOn = toggleEl ? toggleEl.checked : false;
     const baseSurchargeFee = isBaseSurchargeOn ? 19100 : 0;
