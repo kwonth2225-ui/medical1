@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="ko">
 <head>
+<script>
+  // [강제 캐시 파괴] 주소창에 최신 버전 표시(?v=20260908_5)가 없으면 강제로 새로고침 접속
+  if (!window.location.search.includes("v=20260908_5")) {
+    window.location.replace(window.location.pathname + "?v=20260908_5");
+  }
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
@@ -11,8 +17,7 @@
 <meta http-equiv="Expires" content="0">
 
 <title>구급차 이송요금 계산기</title>
-<!-- CSS 파일에도 버전 번호를 붙여 강제 갱신 -->
-<link rel="stylesheet" href="style.css?v=20260908_4">
+<link rel="stylesheet" href="style.css?v=20260908_5">
 </head>
 <body>
 <div class="app">
@@ -70,8 +75,6 @@
   </section>
 </div>
 
-<!-- index.html 맨 아래 -->
 <script src="app.js?v=20260908_5"></script>
-
 </body>
 </html>
