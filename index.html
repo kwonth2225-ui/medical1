@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
 <meta name="description" content="특수구급차 이송요금 계산기">
+
+<!-- 다른 사용자 기기에서 무조건 최신 코드를 가져오도록 강제하는 캐시 방지 메타 태그 -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <title>구급차 이송요금 계산기</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -22,12 +28,10 @@
   </section>
 
   <section class="form-card">
-    <!-- 요청하신 대로 문구 변경: 09시~18시 (주간 주행거리) -->
     <label>09시~18시 (주간 주행거리)
       <div class="unit-input"><input id="dayDistance" type="number" inputmode="decimal" min="0" step="0.01" placeholder="예: 10"><b>km</b></div>
     </label>
 
-    <!-- 요청하신 대로 문구 변경: 18시~익일09시 (야간 주행거리) -->
     <label>18시~익일09시 (야간 주행거리)
       <div class="unit-input"><input id="nightDistance" type="number" inputmode="decimal" min="0" step="0.01" placeholder="예: 100"><b>km</b></div>
     </label>
@@ -66,7 +70,7 @@
   </section>
 </div>
 
-<!-- 버전 숫자를 _2로 변경하여 다른 사용자 기기에도 즉시 강제 반영되도록 설정 -->
-<script src="app.js?v=20260908_2"></script>
+<!-- 버전을 _3으로 갱신하여 이전 캐시를 완전히 대체 -->
+<script src="app.js?v=20260908_3"></script>
 </body>
 </html>
