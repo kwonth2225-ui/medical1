@@ -1,5 +1,5 @@
-// [자동 강제 업데이트] 사용자의 기기가 구버전을 실행 중이면 자동으로 최신화
-const CURRENT_VERSION = "20260908_4";
+// [자동 강제 업데이트] 버전을 _5로 올려서 기존 브라우저 캐시를 강제로 파괴
+const CURRENT_VERSION = "20260908_5";
 if (localStorage.getItem("app_version") !== CURRENT_VERSION) {
   localStorage.setItem("app_version", CURRENT_VERSION);
   window.location.reload(true);
