@@ -1,4 +1,10 @@
-// 안전한 요소 선택 함수
+// [자동 강제 업데이트] 사용자의 기기가 구버전을 실행 중이면 자동으로 최신화
+const CURRENT_VERSION = "20260908_4";
+if (localStorage.getItem("app_version") !== CURRENT_VERSION) {
+  localStorage.setItem("app_version", CURRENT_VERSION);
+  window.location.reload(true);
+}
+
 const $ = id => document.getElementById(id);
 const money = n => Math.round(n).toLocaleString("ko-KR") + "원";
 
@@ -15,15 +21,13 @@ function calculate() {
 
     const totalDist = dayDist + nightDist;
 
-    // 10km 기본거리 차감 (주간 거리 우선 차감 후 남으면 야간 차감)
     let remainBase = 10;
     const dayExtraKm = Math.max(0, dayDist - remainBase);
     remainBase = Math.max(0, remainBase - dayDist);
     const nightExtraKm = Math.max(0, nightDist - remainBase);
 
-    // 요금 산정
     const dayExtraFee = dayExtraKm * 2300;
-    const nightExtraFee = nightExtraKm * 2760; // 기본 2,300원 + 거리할증 460원
+    const nightExtraFee = nightExtraKm * 2760;
 
     const isBaseSurchargeOn = toggleEl ? toggleEl.checked : false;
     const baseSurchargeFee = isBaseSurchargeOn ? 19100 : 0;
@@ -33,7 +37,6 @@ function calculate() {
 
     const total = 95500 + dayExtraFee + nightExtraFee + baseSurchargeFee + waitFee;
 
-    // 화면 업데이트
     if ($("total")) $("total").innerHTML = Math.round(total).toLocaleString("ko-KR") + "<span>원</span>";
     if ($("baseFee")) $("baseFee").textContent = money(95500);
     if ($("totalKm")) $("totalKm").textContent = totalDist.toFixed(2) + " km";
@@ -53,14 +56,11 @@ function calculate() {
   }
 }
 
-// 모바일 호환 이벤트 등록
 function bindEvents() {
   const calcBtn = $("calc");
   const resetBtn = $("reset");
 
-  if (calcBtn) {
-    calcBtn.addEventListener("click", calculate);
-  }
+  if (calcBtn) calcBtn.addEventListener("click", calculate);
 
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
@@ -84,7 +84,6 @@ function bindEvents() {
   calculate();
 }
 
-// DOM 로드 완료 후 실행
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", bindEvents);
 } else {
