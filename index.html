@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
 <script>
-  // [강제 캐시 파괴] 주소창에 최신 버전 표시(?v=20260908_5)가 없으면 강제로 새로고침 접속
-  if (!window.location.search.includes("v=20260908_5")) {
-    window.location.replace(window.location.pathname + "?v=20260908_5");
+  // [자동 강제 업데이트] v=20260908_7 파라미터가 없으면 자동 새로고침
+  if (!window.location.search.includes("v=20260908_7")) {
+    window.location.replace(window.location.pathname + "?v=20260908_7");
   }
 </script>
 <meta charset="utf-8">
@@ -17,7 +17,7 @@
 <meta http-equiv="Expires" content="0">
 
 <title>구급차 이송요금 계산기</title>
-<link rel="stylesheet" href="style.css?v=20260908_5">
+<link rel="stylesheet" href="style.css?v=20260908_7">
 </head>
 <body>
 <div class="app">
@@ -41,10 +41,26 @@
       <div class="unit-input"><input id="nightDistance" type="number" inputmode="decimal" min="0" step="0.01" placeholder="예: 100"><b>km</b></div>
     </label>
 
-    <label>기관 도착 후 대기시간
-      <div class="unit-input"><input id="wait" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 45"><b>분</b></div>
+    <!-- 대기시간 영역 (붉은색 총 대기시간 표시) -->
+    <label id="waitLabel">기관 도착 후 대기시간 <span id="calcWaitDisplay" style="color: #ff5252; font-weight: bold; margin-left: 6px;"></span>
+      <!-- 직접 분 입력 방식 -->
+      <div id="directWaitBox" class="unit-input">
+        <input id="wait" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 45"><b>분</b>
+      </div>
+      <!-- 도착시간 / 인계시간 입력 방식 (스위치 ON 시 표시) -->
+      <div id="timeWaitBox" style="display: none; margin-top: 8px; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span style="font-size: 0.85rem; color: #94a3b8; min-width: 65px;">도착시간</span>
+          <input id="arrivalTime" type="time" style="flex:1; padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff;">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span style="font-size: 0.85rem; color: #94a3b8; min-width: 65px;">인계시간</span>
+          <input id="handoverTime" type="time" style="flex:1; padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff;">
+        </div>
+      </div>
     </label>
 
+    <!-- 할증 기본료 스위치 -->
     <div class="switch-row">
       <div>
         <b>할증 기본료 (19,100원)</b>
@@ -54,7 +70,16 @@
     </div>
     <div class="hint">18시 이전 출발 후 18시 경과 운행: 스위치 OFF (야간거리만 km당 할증)</div>
 
-    <button id="calc" class="main-btn">요금 계산</button>
+    <!-- 시간 입력 방식 스위치 -->
+    <div class="switch-row" style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px;">
+      <div>
+        <b>시간 입력으로 대기시간 계산</b>
+        <small>도착/인계 시간 선택 시 자동 계산</small>
+      </div>
+      <label class="switch"><input id="timeInputToggle" type="checkbox"><span></span></label>
+    </div>
+
+    <button id="calc" class="main-btn" style="margin-top: 16px;">요금 계산</button>
     <button id="reset" class="reset-btn">초기화</button>
   </section>
 
@@ -75,6 +100,6 @@
   </section>
 </div>
 
-<script src="app.js?v=20260908_5"></script>
+<script src="app.js?v=20260908_7"></script>
 </body>
 </html>
