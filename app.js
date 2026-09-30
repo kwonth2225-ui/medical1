@@ -1,4 +1,4 @@
-const CURRENT_VERSION = "20260908_8";
+const CURRENT_VERSION = "20260908_9";
 if (localStorage.getItem("app_version") !== CURRENT_VERSION) {
   localStorage.setItem("app_version", CURRENT_VERSION);
   window.location.reload(true);
@@ -9,6 +9,7 @@ const money = n => Math.round(n).toLocaleString("ko-KR") + "원";
 
 function getCalculatedWaitMinutes() {
   const isTimeMode = $("timeInputToggle") ? $("timeInputToggle").checked : false;
+  
   if (!isTimeMode) {
     return Math.max(0, Number($("wait") ? $("wait").value : 0) || 0);
   }
@@ -24,7 +25,6 @@ function getCalculatedWaitMinutes() {
   let arrivalMinutes = aH * 60 + aM;
   let handoverMinutes = hH * 60 + hM;
 
-  // 인계시간이 도착시간보다 빠른 경우 자정을 넘긴 것으로 계산 (익일 인계 완료)
   if (handoverMinutes < arrivalMinutes) {
     handoverMinutes += 24 * 60;
   }
@@ -41,11 +41,15 @@ function calculate() {
     const dayDist = Math.max(0, Number(dayEl ? dayEl.value : 0) || 0);
     const nightDist = Math.max(0, Number(nightEl ? nightEl.value : 0) || 0);
     
-    // 대기시간 계산 (도착시간 ~ 인계시간)
+    // 대기시간 계산
     const wait = getCalculatedWaitMinutes();
 
-    // 시간 입력 모드일 경우 붉은색 글씨로 총 대기시간 표시
+    // 입력 모드에 따른 화면 요소 전환 및 붉은색 문구 표시
     const isTimeMode = $("timeInputToggle") ? $("timeInputToggle").checked : false;
+    
+    if ($("directWaitBox")) $("directWaitBox").style.display = isTimeMode ? "none" : "flex";
+    if ($("timeWaitBox")) $("timeWaitBox").style.display = isTimeMode ? "flex" : "none";
+
     const displayEl = $("calcWaitDisplay");
     if (displayEl) {
       if (isTimeMode && ($("arrivalTime").value \vert{}\vert{} $("handoverTime").value)) {
@@ -96,16 +100,6 @@ function calculate() {
 function bindEvents() {
   const calcBtn = $("calc");
   const resetBtn = $("reset");
-  const timeToggle = $("timeInputToggle");
-
-  if (timeToggle) {
-    timeToggle.addEventListener("change", (e) => {
-      const isChecked = e.target.checked;
-      if ($("directWaitBox")) $("directWaitBox").style.display = isChecked ? "none" : "flex";
-      if ($("timeWaitBox")) $("timeWaitBox").style.display = isChecked ? "flex" : "none";
-      calculate();
-    });
-  }
 
   if (calcBtn) calcBtn.addEventListener("click", calculate);
 
@@ -117,16 +111,13 @@ function bindEvents() {
       if ($("arrivalTime")) $("arrivalTime").value = "";
       if ($("handoverTime")) $("handoverTime").value = "";
       if ($("baseSurchargeToggle")) $("baseSurchargeToggle").checked = false;
-      if ($("timeInputToggle")) {
-        $("timeInputToggle").checked = false;
-        if ($("directWaitBox")) $("directWaitBox").style.display = "flex";
-        if ($("timeWaitBox")) $("timeWaitBox").style.display = "none";
-      }
+      if ($("timeInputToggle")) $("timeInputToggle").checked = false;
       calculate();
     });
   }
 
-  ["dayDistance", "nightDistance", "wait", "arrivalTime", "handoverTime", "baseSurchargeToggle"].forEach(id => {
+  // 모든 입력 요소 변경 시 실시간 반영
+  ["dayDistance", "nightDistance", "wait", "arrivalTime", "handoverTime", "baseSurchargeToggle", "timeInputToggle"].forEach(id => {
     const el = $(id);
     if (el) {
       el.addEventListener("input", calculate);
