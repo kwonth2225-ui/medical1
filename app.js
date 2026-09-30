@@ -1,4 +1,4 @@
-const CURRENT_VERSION = "20260908_7";
+const CURRENT_VERSION = "20260908_8";
 if (localStorage.getItem("app_version") !== CURRENT_VERSION) {
   localStorage.setItem("app_version", CURRENT_VERSION);
   window.location.reload(true);
@@ -101,9 +101,8 @@ function bindEvents() {
   if (timeToggle) {
     timeToggle.addEventListener("change", (e) => {
       const isChecked = e.target.checked;
-      $("directWaitBox").style.display = isChecked ? "none" : "flex";
-      $("timeWaitBox").style.display = isChecked ? "flex" : "flex";
-      $("timeWaitBox").style.display = isChecked ? "flex" : "none";
+      if ($("directWaitBox")) $("directWaitBox").style.display = isChecked ? "none" : "flex";
+      if ($("timeWaitBox")) $("timeWaitBox").style.display = isChecked ? "flex" : "none";
       calculate();
     });
   }
@@ -120,8 +119,8 @@ function bindEvents() {
       if ($("baseSurchargeToggle")) $("baseSurchargeToggle").checked = false;
       if ($("timeInputToggle")) {
         $("timeInputToggle").checked = false;
-        $("directWaitBox").style.display = "flex";
-        $("timeWaitBox").style.display = "none";
+        if ($("directWaitBox")) $("directWaitBox").style.display = "flex";
+        if ($("timeWaitBox")) $("timeWaitBox").style.display = "none";
       }
       calculate();
     });
