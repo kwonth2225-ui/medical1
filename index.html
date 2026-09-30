@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
 <script>
-  // [자동 강제 업데이트] v=20260908_10 파라미터가 없으면 자동 새로고침
-  if (!window.location.search.includes("v=20260908_10")) {
-    window.location.replace(window.location.pathname + "?v=20260908_10");
+  // [강제 업데이트] v=20260908_11 파라미터가 없으면 자동 새로고침
+  if (!window.location.search.includes("v=20260908_11")) {
+    window.location.replace(window.location.pathname + "?v=20260908_11");
   }
 </script>
 <meta charset="utf-8">
@@ -17,7 +17,7 @@
 <meta http-equiv="Expires" content="0">
 
 <title>구급차 이송요금 계산기</title>
-<link rel="stylesheet" href="style.css?v=20260908_10">
+<link rel="stylesheet" href="style.css?v=20260908_11">
 </head>
 <body>
 <div class="app">
@@ -61,12 +61,12 @@
     </label>
 
     <!-- 할증 기본료 스위치 -->
-    <div class="switch-row" style="cursor: pointer;" onclick="document.getElementById('baseSurchargeToggle').click()">
+    <div class="switch-row">
       <div>
         <b>할증 기본료 (19,100원)</b>
         <small id="autoText">야간·휴일 출발 시 수동 ON</small>
       </div>
-      <label class="switch" onclick="event.stopPropagation();">
+      <label class="switch">
         <input id="baseSurchargeToggle" type="checkbox">
         <span class="slider"></span>
       </label>
@@ -74,12 +74,12 @@
     <div class="hint">18시 이전 출발 후 18시 경과 운행: 스위치 OFF (야간거리만 km당 할증)</div>
 
     <!-- 시간 입력 방식 스위치 -->
-    <div class="switch-row" style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; cursor: pointer;" onclick="document.getElementById('timeInputToggle').click()">
+    <div class="switch-row" style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px;">
       <div>
         <b>시간 입력으로 대기시간 계산</b>
         <small>도착/인계 시간 선택 시 자동 계산</small>
       </div>
-      <label class="switch" onclick="event.stopPropagation();">
+      <label class="switch">
         <input id="timeInputToggle" type="checkbox">
         <span class="slider"></span>
       </label>
@@ -106,6 +106,6 @@
   </section>
 </div>
 
-<script src="app.js?v=20260908_10"></script>
+<script src="app.js?v=20260908_11"></script>
 </body>
 </html>
