@@ -1,4 +1,4 @@
-const CURRENT_VERSION = "20260908_9";
+const CURRENT_VERSION = "20260908_10";
 if (localStorage.getItem("app_version") !== CURRENT_VERSION) {
   localStorage.setItem("app_version", CURRENT_VERSION);
   window.location.reload(true);
@@ -44,7 +44,7 @@ function calculate() {
     // 대기시간 계산
     const wait = getCalculatedWaitMinutes();
 
-    // 입력 모드에 따른 화면 요소 전환 및 붉은색 문구 표시
+    // 입력 모드 토글에 따른 UI 전환
     const isTimeMode = $("timeInputToggle") ? $("timeInputToggle").checked : false;
     
     if ($("directWaitBox")) $("directWaitBox").style.display = isTimeMode ? "none" : "flex";
@@ -93,7 +93,7 @@ function calculate() {
       label.className = isSurchargeActive ? "active" : "normal";
     }
   } catch (e) {
-    console.error("계산 오류:", e);
+    console.error("계산 중 오류 발생:", e);
   }
 }
 
@@ -116,13 +116,15 @@ function bindEvents() {
     });
   }
 
-  // 모든 입력 요소 변경 시 실시간 반영
-  ["dayDistance", "nightDistance", "wait", "arrivalTime", "handoverTime", "baseSurchargeToggle", "timeInputToggle"].forEach(id => {
+  // 모바일 터치 및 인풋 이벤트 전체 바인딩
+  const inputIds = ["dayDistance", "nightDistance", "wait", "arrivalTime", "handoverTime", "baseSurchargeToggle", "timeInputToggle"];
+  
+  inputIds.forEach(id => {
     const el = $(id);
     if (el) {
       el.addEventListener("input", calculate);
       el.addEventListener("change", calculate);
-      el.addEventListener("keyup", calculate);
+      el.addEventListener("click", calculate);
     }
   });
 
