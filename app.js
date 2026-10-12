@@ -1,4 +1,4 @@
-const CURRENT_VERSION = "20260908_11";
+const CURRENT_VERSION = "20260908_12";
 if (localStorage.getItem("app_version") !== CURRENT_VERSION) {
   localStorage.setItem("app_version", CURRENT_VERSION);
   window.location.reload(true);
@@ -6,6 +6,15 @@ if (localStorage.getItem("app_version") !== CURRENT_VERSION) {
 
 const $ = id => document.getElementById(id);
 const money = n => Math.round(n).toLocaleString("ko-KR") + "원";
+
+// [PWA 필수] 서비스 워커 등록 (설치 가능하게 만듦)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(err => {
+      console.log('SW 등록 실패:', err);
+    });
+  });
+}
 
 function getCalculatedWaitMinutes() {
   const timeToggle = $("timeInputToggle");
@@ -47,10 +56,8 @@ function calculate() {
     const dayDist = Math.max(0, Number(dayEl ? dayEl.value : 0) || 0);
     const nightDist = Math.max(0, Number(nightEl ? nightEl.value : 0) || 0);
     
-    // 대기시간 분 계산
     const wait = getCalculatedWaitMinutes();
 
-    // UI 박스 전환
     const isTimeMode = timeToggleEl ? timeToggleEl.checked : false;
     const directBox = $("directWaitBox");
     const timeBox = $("timeWaitBox");
@@ -84,7 +91,6 @@ function calculate() {
     const isBaseSurchargeOn = toggleEl ? toggleEl.checked : false;
     const baseSurchargeFee = isBaseSurchargeOn ? 19100 : 0;
 
-    // 대기요금 계산 (30분 초과 시 10분당 6,000원)
     const waitUnits = wait <= 30 ? 0 : Math.ceil((wait - 30) / 10);
     const waitFee = waitUnits * 6000;
 
